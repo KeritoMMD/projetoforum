@@ -1,0 +1,65 @@
+
+
+
+
+DROP TABLE IF exists mensagens;
+CREATE TABLE mensagens
+(
+	idMensagem INT auto_increment,
+	idTopico INT,
+    	idUsuario INT,
+	conteudo varchar(300),
+	dataCriacao DATE,
+    
+    	PRIMARY KEY(idMensagem, idTopico, idUsuario)
+
+);
+
+
+
+DROP TABLE IF exists topicos;
+CREATE TABLE topicos
+(
+	idTopico INT auto_increment,
+	idCurso INT,
+	titulo varchar(100),
+	dataCriacao DATE,
+	descricao VARCHAR(500),
+    
+    	PRIMARY KEY(idTopico, idCurso)
+
+);
+
+DROP TABLE IF exists usuarios;
+CREATE TABLE usuarios
+(
+	idUsuario INT auto_increment primary key,
+    	prontuario VARCHAR(20),
+   	senha VARCHAR(50),
+    	nomeUsuario varchar(50),
+   	tipo VARCHAR(20)
+);
+
+DROP TABLE IF exists cursos;
+CREATE TABLE cursos
+(
+	idCurso INT auto_increment primary key,
+	nomeCurso varchar(50)
+);
+
+
+ALTER TABLE mensagens
+	ADD CONSTRAINT fk_mensagem_topico FOREIGN KEY (idTopico) REFERENCES topicos (idTopico)
+	MATCH SIMPLE ON DELETE CASCADE ON UPDATE CASCADE;
+    
+ALTER TABLE mensagens
+	ADD CONSTRAINT fk_mensagem_usuario FOREIGN KEY (idUsuario) REFERENCES usuarios (idUsuario)
+	MATCH SIMPLE ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE topicos
+	ADD CONSTRAINT fk_topico_curso FOREIGN KEY (idCurso) REFERENCES cursos (idCurso)
+	MATCH SIMPLE ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+
+
